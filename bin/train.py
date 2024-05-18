@@ -124,7 +124,7 @@ def main(data_csv , model , output_path, epochs , batch_size = 8 , n_dt_layers =
         val_obj=validate_data_generator,
     )
 
-
+    return trained_model , history
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(
