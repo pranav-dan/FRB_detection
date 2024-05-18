@@ -130,7 +130,7 @@ def ready_for_train_ensemble(models, nf, ndt, nft):
 # dtype=tf.float32, name='data_freq_time'), name='data_freq_time', description="created by layer 'data_freq_time'") at layer "model_3". 
 # The following previous layers were accessed without issue: ['model_3']
 
-def get_model(model_idx):
+def get_model(model_idx, model_json,model_csv_path):
     """
 
     :param model_idx: model string between a--j
@@ -140,8 +140,8 @@ def get_model(model_idx):
     # Get the model from the folder
     logger.info(f"Getting model {model_idx}")
     path = os.path.split(__file__)[0]
-    model_json = glob.glob(f"{path}/models/{model_idx}_FT*/*json")[0]
-    print(model_json)
+    # model_json = glob.glob(f"{path}/models/{model_idx}_FT*/*json")[0]
+    # print(model_json)
     # Read the model from the json
     # pdb.set_trace()
     with open(model_json, "r") as j:
@@ -150,7 +150,8 @@ def get_model(model_idx):
     model = tf.keras.models.model_from_json(model_json_content)
 
     # get the model weights, if not present download them.
-    model_list = pd.read_csv(f"{path}/models/model_list.csv")
+    # model_list = pd.read_csv(f"{path}/models/model_list.csv")
+    model_list= pd.read_csv(model_csv_path)
     model_index = string.ascii_lowercase.index(model_idx)
 
     weights = get_file(

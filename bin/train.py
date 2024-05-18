@@ -80,7 +80,7 @@ def train(model, epochs, patience, output_path, nproc, train_obj, val_obj):
     return model, train_history
 
 
-def main(data_csv , model , output_path, epochs , batch_size = 8 , n_dt_layers = 0 , n_ft_layers = 0 , n_fusion_layers=1 , nproc=4 , patience=3,val_split=0.2 ):
+def main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8 , n_dt_layers = 0 , n_ft_layers = 0 , n_fusion_layers=1 , nproc=4 , patience=3,val_split=0.2 ):
     data_df = pd.read_csv(data_csv)
 
     train_df, val_df = train_test_split(
@@ -105,7 +105,7 @@ def main(data_csv , model , output_path, epochs , batch_size = 8 , n_dt_layers =
     # for idx, file in enumerate(train_data_generator):
     #     print(file)
     #     pdb.set_trace()
-    model_to_train = get_model(model)
+    model_to_train = get_model(model,model_json, model_csv_path)
     
     model_to_train = ready_for_train(
         model_to_train,
