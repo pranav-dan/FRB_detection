@@ -70,7 +70,6 @@ def train(model, epochs, batch_size,patience, output_path, nproc, train_obj, val
         generator=train_obj,
         validation_data=val_obj,
         epochs=epochs,
-        batch_size= batch_size,
         use_multiprocessing=use_multiprocessing,
         max_queue_size=10,
         workers=nproc,
