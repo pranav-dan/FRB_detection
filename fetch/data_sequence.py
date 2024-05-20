@@ -115,7 +115,6 @@ class DataGenerator(keras.utils.Sequence):
         y = np.empty((len(list_IDs_temp)), dtype=int)
         # Generate data
         for i, ID in enumerate(list_IDs_temp):
-            print("ID:",ID)
             # try:
             with h5py.File(ID, "r") as f:
                 file_name = ID.split("/")[-1]
