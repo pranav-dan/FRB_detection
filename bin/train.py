@@ -49,14 +49,14 @@ def train(model, epochs, patience, output_path, nproc, train_obj, val_obj):
         monitor="val_loss",
         min_delta=1e-3,
         patience=patience,
-        verbose=1,
+        verbose=2,
         mode="min",
         restore_best_weights=True,
     )
     CK = ModelCheckpoint(
         output_path + "weights.h5",
         monitor="val_loss",
-        verbose=1,
+        verbose=2,
         save_best_only=True,
         save_weights_only=False,
         mode="min",
@@ -75,7 +75,7 @@ def train(model, epochs, patience, output_path, nproc, train_obj, val_obj):
         workers=nproc,
         shuffle=True,
         callbacks=callbacks,
-        verbose=1,
+        verbose=2,
     )
     return model, train_history
 
@@ -106,7 +106,6 @@ def main(data_csv , model , model_json,model_csv_path,output_path, epochs , batc
     #     print(file)
     #     pdb.set_trace()
     model_to_train = get_model(model,model_json, model_csv_path)
-    
     model_to_train = ready_for_train(
         model_to_train,
         ndt=n_dt_layers,
@@ -125,6 +124,17 @@ def main(data_csv , model , model_json,model_csv_path,output_path, epochs , batc
     )
 
     return trained_model , history
+
+
+data_csv = "/Users/pranavd/Pranav/frb/file1.csv"
+model = "a"
+output_path = "output"
+os.makedirs(output_path, exist_ok=True)
+epochs = 2
+batch_size = 8
+model_json = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/a_FT_DenseNet121_2_DMT_Xception_13_256/ft_DenseNet121_2_dt_Xception_13_256.json"
+model_csv_path = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/model_list.csv"
+trained_model , history = main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8)
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(

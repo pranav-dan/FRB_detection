@@ -63,7 +63,6 @@ def ready_for_train(model, nf, ndt, nft):
     model.layers[4] = open_n_layers_for_training(model.layers[4], nft)
     model.layers[5] = open_n_layers_for_training(model.layers[5], ndt)
 
-    pdb.set_trace()
     model_trainable = Model(model.inputs, model.outputs)
 
     # Adam optimizer with imagenet defaults
@@ -112,7 +111,6 @@ def ready_for_train_ensemble(models, nf, ndt, nft):
 
     print("avg layer:", dense_output)
     print("model output:", models[0].outputs)
-    pdb.set_trace()
 
     model_trainable = Model(inputs,[dense_output])
     # Adam optimizer with imagenet defaults
