@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 
 
-def train(model, epochs, patience, output_path, nproc, train_obj, val_obj):
+def train(model, epochs, batch_size,patience, output_path, nproc, train_obj, val_obj):
     """
 
     :param model: model to train (must be compiled)
@@ -69,7 +69,8 @@ def train(model, epochs, patience, output_path, nproc, train_obj, val_obj):
     train_history = model.fit_generator(
         generator=train_obj,
         validation_data=val_obj,
-        epochs=3,
+        epochs=epochs,
+        batch_size= batch_size,
         use_multiprocessing=use_multiprocessing,
         max_queue_size=10,
         workers=nproc,
@@ -116,6 +117,7 @@ def main(data_csv , model , model_json,model_csv_path,output_path, epochs , batc
     trained_model, history = train(
         model_to_train,
         epochs=epochs,
+        batch_size=batch_size,
         patience=patience,
         output_path=output_path,
         nproc=nproc,
