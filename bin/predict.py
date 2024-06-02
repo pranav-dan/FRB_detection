@@ -77,7 +77,7 @@ logger = logging.getLogger(__name__)
 #         raise ValueError(f"Model only range from a -- j.")
 
 
-def main_predict(model ,model_json , model_csv_path ,data_dir , batch_size = 8, use_multiprocessing= True, nproc=4 ,probability=0.5):
+def main_predict(model ,model_json , model_csv_path ,data_dir ,result_csv, batch_size = 8, use_multiprocessing= True, nproc=4 ,probability=0.5):
     model = get_model(model,model_json, model_csv_path)
     predicted_labels = []
     real_labels = []
@@ -115,10 +115,9 @@ def main_predict(model ,model_json , model_csv_path ,data_dir , batch_size = 8, 
         results_dict = {}
         results_dict["candidate"] = cands_to_eval
         results_dict["probability"] = probs[:, 1]
-        pred_label = np.round(probs[:, 1] >= probability)
         results_dict["label"] = np.round(probs[:, 1] >= probability)
-        results_file = f"/results_{model}.csv"
-        pd.DataFrame(results_dict).to_csv(results_file)
+        # results_file = f"./results_{model}.csv"
+        pd.DataFrame(results_dict).to_csv(result_csv)
 
     print("Done prediction")
     
