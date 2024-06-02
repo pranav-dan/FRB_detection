@@ -137,7 +137,7 @@ epochs = 2
 batch_size = 8
 model_json = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/a_FT_DenseNet121_2_DMT_Xception_13_256/ft_DenseNet121_2_dt_Xception_13_256.json"
 model_csv_path = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/model_list.csv"
-trained_model , history = main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8)
+# trained_model , history = main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8)
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(

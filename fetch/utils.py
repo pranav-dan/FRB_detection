@@ -13,7 +13,6 @@ from tensorflow.keras.models import model_from_json
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import get_file 
 from tensorflow.keras.layers import Average , Dense 
-import keras
 
 
 os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
