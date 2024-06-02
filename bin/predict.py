@@ -87,6 +87,7 @@ def main_predict(model ,model_json , model_csv_path ,data_dir ,result_csv, batch
 
         cands_to_eval = glob.glob(f"{full_path_data_dir}/*hdf5")
 
+        print("length:" , len(cands_to_eval))
         if len(cands_to_eval) == 0:
             logger.warning(f"No candidates to evaluate in directory: {data_dir}")
             continue
@@ -118,6 +119,6 @@ def main_predict(model ,model_json , model_csv_path ,data_dir ,result_csv, batch
         results_dict["label"] = np.round(probs[:, 1] >= probability)
         # results_file = f"./results_{model}.csv"
         pd.DataFrame(results_dict).to_csv(result_csv)
-
+        pdb.set_trace()
     print("Done prediction")
     
