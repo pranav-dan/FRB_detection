@@ -77,8 +77,8 @@ logger = logging.getLogger(__name__)
 #         raise ValueError(f"Model only range from a -- j.")
 
 
-def main_predict(model , data_dir , batch_size = 8, use_multiprocessing= True, nproc=4 ,probability=0.5):
-    model = get_model(model)
+def main_predict(model ,model_json , model_csv_path ,data_dir , batch_size = 8, use_multiprocessing= True, nproc=4 ,probability=0.5):
+    model = get_model(model,model_json, model_csv_path)
     predicted_labels = []
     real_labels = []
 
