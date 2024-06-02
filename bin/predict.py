@@ -120,4 +120,5 @@ def main_predict(model ,model_json , model_csv_path ,data_dir , batch_size = 8, 
         results_file = f"/results_{model}.csv"
         pd.DataFrame(results_dict).to_csv(results_file)
 
+    print("Done prediction")
     
