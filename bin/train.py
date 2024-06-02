@@ -45,14 +45,14 @@ def train(model, epochs, batch_size,patience, output_path, nproc, train_obj, val
         use_multiprocessing = True
 
     # Callbacks for training and validation
-    ES = EarlyStopping(
-        monitor="val_loss",
-        min_delta=1e-3,
-        patience=patience,
-        verbose=2,
-        mode="min",
-        restore_best_weights=True,
-    )
+    # ES = EarlyStopping(
+    #     monitor="val_loss",
+    #     min_delta=1e-3,
+    #     patience=patience,
+    #     verbose=2,
+    #     mode="min",
+    #     restore_best_weights=True,
+    # )
     CK = ModelCheckpoint(
         output_path + "weights.h5",
         monitor="val_loss",
@@ -64,7 +64,9 @@ def train(model, epochs, batch_size,patience, output_path, nproc, train_obj, val
     csv_name = output_path + "training_log.csv"
     LO = CSVLogger(csv_name, append=False)
 
-    callbacks = [ES, CK, LO]
+    # callbacks = [ES, CK, LO]
+    callbacks = [CK, LO]
+
 
     train_history = model.fit_generator(
         generator=train_obj,
@@ -127,15 +129,15 @@ def main(data_csv , model , model_json,model_csv_path,output_path, epochs , batc
     return trained_model , history
 
 
-# data_csv = "/Users/pranavd/Pranav/frb/file1.csv"
-# model = "a"
-# output_path = "output"
-# os.makedirs(output_path, exist_ok=True)
-# epochs = 2
-# batch_size = 8
-# model_json = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/a_FT_DenseNet121_2_DMT_Xception_13_256/ft_DenseNet121_2_dt_Xception_13_256.json"
-# model_csv_path = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/model_list.csv"
-# trained_model , history = main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8)
+data_csv = "/Users/pranavd/Pranav/frb/file1.csv"
+model = "a"
+output_path = "output"
+os.makedirs(output_path, exist_ok=True)
+epochs = 2
+batch_size = 8
+model_json = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/a_FT_DenseNet121_2_DMT_Xception_13_256/ft_DenseNet121_2_dt_Xception_13_256.json"
+model_csv_path = "/Users/pranavd/Pranav/frb/FRB_detection/fetch/models/model_list.csv"
+trained_model , history = main(data_csv , model , model_json,model_csv_path,output_path, epochs , batch_size = 8)
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(
