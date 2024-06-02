@@ -82,43 +82,41 @@ def main_predict(model ,model_json , model_csv_path ,data_dir ,result_csv, batch
     predicted_labels = []
     real_labels = []
 
-    for data_file in os.listdir(data_dir):
-        full_path_data_dir= os.path.join(data_dir, data_file)
+    # for data_file in os.listdir(data_dir):
 
-        cands_to_eval = glob.glob(f"{full_path_data_dir}/*hdf5")
+    cands_to_eval = glob.glob(f"{data_dir}/*hdf5")
 
-        print("length:" , len(cands_to_eval))
-        if len(cands_to_eval) == 0:
-            logger.warning(f"No candidates to evaluate in directory: {data_dir}")
-            continue
+    print("length:" , len(cands_to_eval))
+    # if len(cands_to_eval) == 0:
+    #     logger.warning(f"No candidates to evaluate in directory: {data_dir}")
+    #     continue
 
-        logging.debug(f"Read {len(cands_to_eval)} candidates")
+    logging.debug(f"Read {len(cands_to_eval)} candidates")
 
-        # Get the data generator, make sure noise and shuffle are off.
-        cand_datagen = DataGenerator(
-            list_IDs=cands_to_eval,
-            labels=[0] * len(cands_to_eval),
-            shuffle=False,
-            noise=False,
-            batch_size=batch_size,
-        )
+    # Get the data generator, make sure noise and shuffle are off.
+    cand_datagen = DataGenerator(
+        list_IDs=cands_to_eval,
+        labels=[0] * len(cands_to_eval),
+        shuffle=False,
+        noise=False,
+        batch_size=batch_size,
+    )
 
-        # get's get predicting
-        probs = model.predict_generator(
-            generator=cand_datagen,
-            verbose=1,
-            use_multiprocessing=use_multiprocessing,
-            workers=nproc,
-            steps=len(cand_datagen),
-        )
+    # get's get predicting
+    probs = model.predict_generator(
+        generator=cand_datagen,
+        verbose=1,
+        use_multiprocessing=use_multiprocessing,
+        workers=nproc,
+        steps=len(cand_datagen),
+    )
 
-        # Save results
-        results_dict = {}
-        results_dict["candidate"] = cands_to_eval
-        results_dict["probability"] = probs[:, 1]
-        results_dict["label"] = np.round(probs[:, 1] >= probability)
-        # results_file = f"./results_{model}.csv"
-        pd.DataFrame(results_dict).to_csv(result_csv)
-        pdb.set_trace()
+    # Save results
+    results_dict = {}
+    results_dict["candidate"] = cands_to_eval
+    results_dict["probability"] = probs[:, 1]
+    results_dict["label"] = np.round(probs[:, 1] >= probability)
+    # results_file = f"./results_{model}.csv"
+    pd.DataFrame(results_dict).to_csv(result_csv)
     print("Done prediction")
     
